@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat IA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      padding: 15px;
+      background: #020617;
+      text-align: center;
+      font-weight: bold;
+    }
+    main {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .msg {
+      margin-bottom: 10px;
+    }
+    .user { color: #38bdf8; }
+    .bot { color: #a7f3d0; }
+    form {
+      display: flex;
+      padding: 10px;
+      background: #020617;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      margin-left: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<header>Chat com IA</header>
+
+<main id="chat"></main>
+
+<form id="form">
+  <input id="input" placeholder="Digite sua pergunta..." />
+  <button>Enviar</button>
+</form>
+
+<script>
+const chat = document.getElementById("chat");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+
+const BACKEND_URL = "COLE_AQUI_A_URL_DO_BACKEND/chat";
+
+form.onsubmit = async (e) => {
+  e.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+
+  chat.innerHTML += `<div class="msg user">Você: ${text}</div>`;
+  input.value = "";
+
+  const res = await fetch(BACKEND_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messages: [{ role: "user", content: text }]
+    })
+  });
+
+  const data = await res.json();
+  const reply = data.choices?.[0]?.message?.content || "Erro";
+
+  chat.innerHTML += `<div class="msg bot">IA: ${reply}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+};
+</script>
+
+</body>
+</html>
