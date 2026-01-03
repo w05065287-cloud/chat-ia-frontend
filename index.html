@@ -1,26 +1,131 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chat IA</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat IA</title>
 
-  <!-- IMPORTANTE -->
-  <link rel="stylesheet" href="./style.css">
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.chat {
+  width: 100%;
+  max-width: 420px;
+  height: 100vh;
+  background: #020617;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+header {
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.msg {
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.user {
+  background: #2563eb;
+  margin-left: auto;
+}
+
+.bot {
+  background: #1e293b;
+}
+
+footer {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  border-top: 1px solid #1e293b;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+</style>
 </head>
+
 <body>
 
-<div class="app">
+<div class="chat">
   <header>🤖 Chat IA</header>
 
-  <main id="chat"></main>
+  <div class="messages" id="messages"></div>
 
   <footer>
-    <input id="input" type="text" placeholder="Digite sua pergunta..." />
+    <input id="input" placeholder="Digite sua pergunta..." />
     <button onclick="enviar()">Enviar</button>
   </footer>
 </div>
 
-<script src="./script.js"></script>
+<script>
+const BACKEND = "https://chat-ia-backend-vk9r.onrender.com/chat";
+
+const messages = document.getElementById("messages");
+const input = document.getElementById("input");
+
+function add(text, type) {
+  const div = document.createElement("div");
+  div.className = "msg " + type;
+  div.innerText = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function enviar() {
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  add(msg, "user");
+  input.value = "";
+
+  fetch(BACKEND, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: msg })
+  })
+  .then(r => r.json())
+  .then(d => add(d.reply || "Erro na resposta", "bot"))
+  .catch(() => add("❌ Erro ao conectar no backend", "bot"));
+}
+</script>
+
 </body>
 </html>
+
