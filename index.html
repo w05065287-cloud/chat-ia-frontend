@@ -3,96 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <title>Chat IA</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.chat {
-  background: white;
-  width: 100%;
-  max-width: 500px;
-  height: 90vh;
-  border-radius: 10px;
+  background: #0f172a;
+  color: white;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
-.messages {
+
+header {
+  background: #020617;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+#chat {
   flex: 1;
-  padding: 10px;
+  padding: 15px;
   overflow-y: auto;
 }
+
 .msg {
+  max-width: 80%;
+  padding: 10px 14px;
   margin-bottom: 10px;
+  border-radius: 12px;
+  line-height: 1.4;
 }
-.user { text-align: right; color: #2563eb; }
-.bot { text-align: left; color: #111; }
-form {
+
+.user {
+  background: #2563eb;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.bot {
+  background: #1e293b;
+  align-self: flex-start;
+}
+
+footer {
   display: flex;
-  border-top: 1px solid #ddd;
+  padding: 10px;
+  background: #020617;
 }
+
 input {
   flex: 1;
   padding: 10px;
+  border-radius: 8px;
   border: none;
+  outline: none;
 }
+
 button {
-  padding: 10px 15px;
+  margin-left: 10px;
+  padding: 10px 16px;
   border: none;
+  border-radius: 8px;
   background: #2563eb;
   color: white;
+  cursor: pointer;
 }
 </style>
 </head>
+
 <body>
 
-<div class="chat">
-  <div class="messages" id="messages"></div>
-  <form id="form">
-    <input id="input" placeholder="Digite sua pergunta..." />
-    <button>Enviar</button>
-  </form>
-</div>
+<header>🤖 Chat IA</header>
+
+<div id="chat"></div>
+
+<footer>
+  <input id="input" placeholder="Digite sua pergunta..." />
+  <button onclick="enviar()">Enviar</button>
+</footer>
 
 <script>
 const BACKEND_URL = "https://chat-ia-backend-vk9r.onrender.com/chat";
-
-const form = document.getElementById("form");
+const chat = document.getElementById("chat");
 const input = document.getElementById("input");
-const messagesDiv = document.getElementById("messages");
 
 function addMsg(text, cls) {
   const div = document.createElement("div");
   div.className = "msg " + cls;
-  div.textContent = text;
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-form.onsubmit = async (e) => {
-  e.preventDefault();
-  const text = input.value.trim();
-  if (!text) return;
+async function enviar() {
+  const texto = input.value.trim();
+  if (!texto) return;
 
-  addMsg(text, "user");
+  addMsg(texto, "user");
   input.value = "";
 
-  const res = await fetch(BACKEND_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      messages: [{ role: "user", content: text }]
-    })
-  });
+  addMsg("Digitando...", "bot");
 
-  const data = await res.json();
-  addMsg(data.choices[0].message.content, "bot");
-};
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: texto }]
+      })
+    });
+
+    const data = await res.json();
+    chat.lastChild.remove();
+
+    addMsg(data.choices[0].message.content, "bot");
+
+  } catch (e) {
+    chat.lastChild.remove();
+    addMsg("❌ Erro ao responder", "bot");
+    console.error(e);
+  }
+}
 </script>
 
 </body>
