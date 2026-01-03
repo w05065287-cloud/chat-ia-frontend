@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://chat-ia-backend-vk9r.onrender.com//chat";
+const BACKEND_URL = "https://chat-ia-backend-vpk9.onrender.com/chat";
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("input");
