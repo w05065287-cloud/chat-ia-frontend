@@ -1,29 +1,39 @@
-const BACKEND = "https://chat-ia-backend-vk9r.onrender.com/chat";
+const BACKEND_URL = "https://chat-ia-backend-vk9r.onrender.com//chat";
 
-const messages = document.getElementById("messages");
+const chat = document.getElementById("chat");
 const input = document.getElementById("input");
 
-function add(text, type) {
+function add(text, cls) {
   const div = document.createElement("div");
-  div.className = "msg " + type;
+  div.className = "msg " + cls;
   div.innerText = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function enviar() {
-  const msg = input.value.trim();
-  if (!msg) return;
+async function send() {
+  const text = input.value.trim();
+  if (!text) return;
 
-  add(msg, "user");
+  add(text, "user");
   input.value = "";
 
-  fetch(BACKEND, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: msg })
-  })
-  .then(r => r.json())
-  .then(d => add(d.reply, "bot"))
-  .catch(() => add("❌ Erro ao conectar no backend", "bot"));
+  try {
+    const res = await fetch(BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+
+    const data = await res.json();
+
+    if (data.reply) {
+      add(data.reply, "bot");
+    } else {
+      add("Erro ao gerar resposta", "bot");
+    }
+
+  } catch {
+    add("Erro de conexão com o servidor", "bot");
+  }
 }
