@@ -1,133 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Chat IA</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-header {
-  background: #020617;
-  padding: 15px;
-  text-align: center;
-  font-weight: bold;
-}
-
-#chat {
-  flex: 1;
-  padding: 15px;
-  overflow-y: auto;
-}
-
-.msg {
-  max-width: 80%;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  line-height: 1.4;
-}
-
-.user {
-  background: #2563eb;
-  align-self: flex-end;
-  margin-left: auto;
-}
-
-.bot {
-  background: #1e293b;
-  align-self: flex-start;
-}
-
-footer {
-  display: flex;
-  padding: 10px;
-  background: #020617;
-}
-
-input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-}
-
-button {
-  margin-left: 10px;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  cursor: pointer;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Chat IA</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>🤖 Chat IA</header>
+<div class="chat-container">
+  <h1>🤖 Chat IA</h1>
 
-<div id="chat"></div>
+  <div id="chat"></div>
 
-<footer>
-  <input id="input" placeholder="Digite sua pergunta..." />
-  <button onclick="enviar()">Enviar</button>
-</footer>
+  <div class="input-area">
+    <input id="input" type="text" placeholder="Digite sua pergunta..." />
+    <button onclick="enviar()">Enviar</button>
+  </div>
+</div>
 
-<script>
-const BACKEND_URL = "https://chat-ia-backend-vk9r.onrender.com/chat";
-const chat = document.getElementById("chat");
-const input = document.getElementById("input");
-
-function addMsg(text, cls) {
-  const div = document.createElement("div");
-  div.className = "msg " + cls;
-  div.innerText = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-async function enviar() {
-  const texto = input.value.trim();
-  if (!texto) return;
-
-  addMsg(texto, "user");
-  input.value = "";
-
-  addMsg("Digitando...", "bot");
-
-  try {
-    const res = await fetch(BACKEND_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        messages: [{ role: "user", content: texto }]
-      })
-    });
-
-    const data = await res.json();
-    chat.lastChild.remove();
-
-    addMsg(data.choices[0].message.content, "bot");
-
-  } catch (e) {
-    chat.lastChild.remove();
-    addMsg("❌ Erro ao responder", "bot");
-    console.error(e);
-  }
-}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
