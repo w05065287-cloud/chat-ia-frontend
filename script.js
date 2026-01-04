@@ -9,6 +9,7 @@ function add(text, cls) {
   div.innerText = text;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
+  return div;
 }
 
 async function send() {
@@ -18,6 +19,8 @@ async function send() {
   add(text, "user");
   input.value = "";
 
+  const bot = add("", "bot");
+
   try {
     const res = await fetch(BACKEND_URL, {
       method: "POST",
@@ -25,15 +28,22 @@ async function send() {
       body: JSON.stringify({ message: text })
     });
 
-    const data = await res.json();
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
 
-    if (data.reply) {
-      add(data.reply, "bot");
-    } else {
-      add("Erro ao gerar resposta", "bot");
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+
+      bot.innerText += decoder.decode(value);
+      chat.scrollTop = chat.scrollHeight;
     }
 
   } catch {
-    add("Erro de conexão com o servidor", "bot");
+    bot.innerText = "Erro ao responder ❌";
   }
 }
+
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") send();
+});
