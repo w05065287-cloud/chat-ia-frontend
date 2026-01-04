@@ -8,15 +8,23 @@
 </head>
 <body>
 
-  <header>🤖 Chat IA</header>
+<div class="app">
+  <header>
+    <span>🤖 Chat IA</span>
+  </header>
 
   <main id="chat"></main>
 
-  <footer>
-    <input id="input" placeholder="Digite sua pergunta..." />
-    <button onclick="send()">Enviar</button>
-  </footer>
+  <form class="input-area" onsubmit="send(); return false;">
+    <input
+      id="input"
+      placeholder="Digite sua mensagem..."
+      autocomplete="off"
+    />
+    <button type="submit">➤</button>
+  </form>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
