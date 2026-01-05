@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat IA</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
-      <div class="logo">🤖 Chat IA</div>
+
+  <div class="chat-container">
+    <header class="chat-header">
+      <h1>Chat IA</h1>
     </header>
 
-    <main id="chat" class="chatarea"></main>
+    <main id="chat" class="chat-messages"></main>
 
-    <form id="form" class="inputArea">
-      <input id="input" autocomplete="off" placeholder="Digite sua mensagem..." />
-      <button type="submit" title="Enviar">➤</button>
+    <form id="chat-form" class="chat-input">
+      <input
+        type="text"
+        id="message"
+        placeholder="Digite sua pergunta..."
+        autocomplete="off"
+        required
+      />
+      <button type="submit">Enviar</button>
     </form>
   </div>
 
