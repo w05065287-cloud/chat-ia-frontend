@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>ChatGPT Clone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChatGPT</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<div class="app">
-  <header>
-    <h1>ChatGPT</h1>
-    <button onclick="clearChat()">🗑️</button>
-  </header>
+<header class="topbar">
+  <div class="left">☰</div>
+  <div class="center">ChatGPT</div>
+  <div class="right">Fazer upgrade</div>
+</header>
 
-  <main id="chat"></main>
+<main id="chat"></main>
 
-  <footer>
-    <input id="input" placeholder="Envie uma mensagem..." />
-    <button onclick="send()">➤</button>
-  </footer>
-</div>
+<footer class="input-area">
+  <button class="plus">＋</button>
+  <input id="input" placeholder="Pergunte qualquer coisa" />
+  <button class="send" onclick="send()">➤</button>
+</footer>
 
 <script src="script.js"></script>
 </body>
