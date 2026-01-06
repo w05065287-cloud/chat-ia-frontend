@@ -1,73 +1,65 @@
-const form = document.getElementById("chat-form");
-const input = document.getElementById("message");
-const chat = document.getElementById("chat");
+const BACKEND_URL = "https://chat-ia-backend-sow2.onrender.com/chat";
 
-function addMessage(text, className) {
+const chat = document.getElementById("chat");
+const input = document.getElementById("input");
+
+let messages = JSON.parse(localStorage.getItem("messages")) || [];
+
+function save() {
+  localStorage.setItem("messages", JSON.stringify(messages));
+}
+
+function add(text, cls) {
   const div = document.createElement("div");
-  div.className = `message ${className}`;
+  div.className = "msg " + cls;
   div.textContent = text;
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
   return div;
 }
 
-function showTyping() {
-  const div = document.createElement("div");
-  div.className = "message bot typing";
-  div.innerHTML = `
-    <span></span>
-    <span></span>
-    <span></span>
-  `;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-  return div;
+function load() {
+  messages.forEach(m => add(m.content, m.role === "user" ? "user" : "bot"));
 }
+load();
 
-function typeText(element, text, speed = 20) {
-  element.textContent = "";
-  let i = 0;
+async function send() {
+  const text = input.value.trim();
+  if (!text) return;
 
-  const interval = setInterval(() => {
-    element.textContent += text.charAt(i);
-    i++;
-    chat.scrollTop = chat.scrollHeight;
-
-    if (i >= text.length) {
-      clearInterval(interval);
-    }
-  }, speed);
-}
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const userMessage = input.value.trim();
-  if (!userMessage) return;
-
-  addMessage(userMessage, "user");
   input.value = "";
+  add(text, "user");
+  messages.push({ role: "user", content: text });
+  save();
 
-  const typing = showTyping();
+  const botDiv = add("", "bot");
+  messages.push({ role: "assistant", content: "" });
 
-  try {
-    const response = await fetch("https://chat-ia-backend-6jgj.onrender.com/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: userMessage })
-    });
+  const res = await fetch(BACKEND_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages })
+  });
 
-    const data = await response.json();
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
 
-    typing.remove();
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
 
-    const botMsg = addMessage("", "bot");
-    typeText(botMsg, data.reply || "Erro ao responder.");
-
-  } catch (err) {
-    typing.remove();
-    addMessage("Erro ao conectar ao servidor.", "bot");
+    const chunk = decoder.decode(value);
+    botDiv.textContent += chunk;
+    messages[messages.length - 1].content += chunk;
+    chat.scrollTop = chat.scrollHeight;
+    save();
   }
-});
+}
+
+function clearChat() {
+  if (confirm("Apagar conversa?")) {
+    messages = [];
+    save();
+    chat.innerHTML = "";
+  }
+}
