@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat IA</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>ChatGPT Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="chat-container">
-    <header class="chat-header">
-      <h1>Chat IA</h1>
-    </header>
+<div class="app">
+  <header>
+    <h1>ChatGPT</h1>
+    <button onclick="clearChat()">🗑️</button>
+  </header>
 
-    <main id="chat" class="chat-messages"></main>
+  <main id="chat"></main>
 
-    <form id="chat-form" class="chat-input">
-      <input
-        type="text"
-        id="message"
-        placeholder="Digite sua pergunta..."
-        autocomplete="off"
-        required
-      />
-      <button type="submit">Enviar</button>
-    </form>
-  </div>
+  <footer>
+    <input id="input" placeholder="Envie uma mensagem..." />
+    <button onclick="send()">➤</button>
+  </footer>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
