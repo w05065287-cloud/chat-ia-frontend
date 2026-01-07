@@ -1,70 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IA Chat — Premium</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Assistente IA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">🤖 <span>IA Chat</span></div>
-      <button id="btnNewChat" class="btn primary">+ Nova conversa</button>
-      <div id="sidebarList" class="sidebar-list" aria-label="Conversas"></div>
-      <div class="sidebar-footer">
-        <button id="themeToggle" class="btn ghost">Tema</button>
-        <small class="muted">Histórico salvo localmente</small>
-      </div>
-    </aside>
+<div class="app">
 
-    <!-- MAIN -->
-    <main class="main">
-      <header class="topbar">
-        <div class="title">Assistente IA</div>
-        <div class="top-actions">
-          <button id="exportBtn" class="btn ghost">Exportar</button>
-        </div>
-      </header>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>IA Chat</h2>
 
-      <section class="chat-area">
-        <div id="chat" class="chat" role="log" aria-live="polite"></div>
+    <button class="new-chat" onclick="novoChat()">+ Nova conversa</button>
 
-        <div id="typing" class="typing hidden" aria-hidden="true">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <div class="txt">Assistente digitando…</div>
-        </div>
-      </section>
+    <ul id="chatList"></ul>
+  </aside>
 
-      <footer class="composer">
-        <textarea id="input" placeholder="Digite sua mensagem — Enter enviar, Shift+Enter nova linha"></textarea>
-        <div class="composer-actions">
-          <button id="stopBtn" class="btn stop hidden" title="Parar">⏹</button>
-          <button id="sendBtn" class="btn send" title="Enviar">➤</button>
-        </div>
-      </footer>
-    </main>
-  </div>
+  <!-- CHAT -->
+  <main class="chat">
+    <header class="chat-header">
+      <h1>Assistente IA</h1>
+    </header>
 
-  <!-- small modal for delete / rename (native confirm used for simplicity) -->
+    <div id="messages" class="messages"></div>
 
-  <template id="msgTpl">
-    <div class="message">
-      <div class="meta">
-        <div class="who"></div>
-        <div class="time"></div>
-      </div>
-      <div class="content"></div>
-      <div class="actions">
-        <button class="btn tiny copy">Copiar</button>
-        <button class="btn tiny del">Excluir</button>
-      </div>
+    <div class="typing" id="typing">IA está digitando...</div>
+
+    <div class="input-area">
+      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
+      <button onclick="enviar()">➤</button>
     </div>
-  </template>
+  </main>
 
-  <script src="script.js"></script>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
