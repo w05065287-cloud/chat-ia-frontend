@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Assistente IA</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IA Chat — Assistente</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="app">
 
-<div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="app-title">IA Chat</div>
+        <button id="btnAdd" class="btn-add" title="Nova conversa">＋</button>
+      </div>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2>IA Chat</h2>
+      <div id="conversations" class="conversations" aria-label="Conversas"></div>
 
-    <button class="new-chat" onclick="novoChat()">+ Nova conversa</button>
+      <div class="sidebar-bottom">
+        <button id="themeToggle" class="btn-ghost">Tema</button>
+        <small class="muted">Histórico salvo localmente</small>
+      </div>
+    </aside>
 
-    <ul id="chatList"></ul>
-  </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="top-title">Assistente IA</div>
+        <div class="top-actions">
+          <button id="exportBtn" class="btn-ghost">Exportar</button>
+          <button id="toggleSidebar" class="btn-ghost mobile-only" title="Mostrar conversas">☰</button>
+        </div>
+      </header>
 
-  <!-- CHAT -->
-  <main class="chat">
-    <header class="chat-header">
-      <h1>Assistente IA</h1>
-    </header>
+      <section class="chat-area">
+        <div id="chat" class="chat" role="log" aria-live="polite"></div>
 
-    <div id="messages" class="messages"></div>
+        <div id="typing" class="typing hidden">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="txt">Assistente digitando…</span>
+        </div>
+      </section>
 
-    <div class="typing" id="typing">IA está digitando...</div>
+      <footer class="composer">
+        <textarea id="input" placeholder="Digite sua mensagem — Enter para enviar, Shift+Enter nova linha"></textarea>
+        <div class="composer-actions">
+          <button id="stopBtn" class="btn-stop hidden" title="Parar">⏹</button>
+          <button id="sendBtn" class="btn-send" title="Enviar">➤</button>
+        </div>
+      </footer>
+    </main>
 
-    <div class="input-area">
-      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
-      <button onclick="enviar()">➤</button>
-    </div>
-  </main>
+  </div>
 
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
