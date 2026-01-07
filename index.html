@@ -1,44 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Chat IA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IA Chat — Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app">
 
-<div class="bg"></div>
+    <!-- SIDEBAR (desktop) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">🤖 <span>IA Chat</span></div>
 
-<div class="app">
+      <div class="sidebar-controls">
+        <button id="btnNewChat" class="btn primary">+ Nova conversa</button>
+      </div>
 
-  <aside class="sidebar">
-    <div class="logo">🤖 Chat IA</div>
+      <div id="sidebarList" class="sidebar-list" aria-label="Conversas"></div>
 
-    <button class="new-chat" onclick="newChat()">＋ Nova conversa</button>
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="btn ghost">Tema</button>
+        <small class="muted">Histórico salvo localmente</small>
+      </div>
+    </aside>
 
-    <div id="history" class="history"></div>
+    <!-- MAIN -->
+    <main class="main">
+      <header class="topbar">
+        <div class="left">
+          <button id="openModal" class="btn icon mobile-only">＋</button>
+          <h1 class="title">Assistente IA</h1>
+        </div>
+        <div class="right">
+          <button id="exportBtn" class="btn ghost">Exportar</button>
+        </div>
+      </header>
 
-    <button class="theme-toggle" onclick="toggleTheme()">🌗 Tema</button>
-  </aside>
+      <section class="chat-area">
+        <div id="chat" class="chat" role="log" aria-live="polite"></div>
 
-  <section class="main">
+        <div id="typing" class="typing hidden" aria-hidden="true">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="txt">Assistente digitando…</div>
+        </div>
+      </section>
 
-    <header class="top">Assistente IA</header>
+      <footer class="composer">
+        <textarea id="input" placeholder="Digite sua mensagem — Enter para enviar, Shift+Enter nova linha"></textarea>
+        <div class="composer-actions">
+          <button id="stopBtn" class="btn stop hidden" title="Parar">⏹</button>
+          <button id="sendBtn" class="btn send" title="Enviar">➤</button>
+        </div>
+      </footer>
+    </main>
+  </div>
 
-    <div id="chat" class="chat"></div>
+  <!-- Modal de conversas (abre com +) -->
+  <div id="chatModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 id="modalTitle">Conversas</h2>
+        <button id="closeModal" class="btn icon">✕</button>
+      </div>
 
-    <div id="typing" class="typing hidden">IA está digitando…</div>
+      <div class="modal-body">
+        <div class="modal-actions">
+          <button id="modalNew" class="btn primary">+ Nova conversa</button>
+          <button id="modalRefresh" class="btn ghost">Atualizar</button>
+        </div>
 
-    <div class="composer">
-      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
-      <button id="sendBtn">➤</button>
+        <div id="modalList" class="modal-list"></div>
+      </div>
+
+      <div class="modal-footer">
+        <small class="muted">Clique em uma conversa para abrir</small>
+      </div>
     </div>
+  </div>
 
-  </section>
+  <!-- mensagem template -->
+  <template id="msgTpl">
+    <div class="message">
+      <div class="meta">
+        <div class="who"></div>
+        <div class="time"></div>
+      </div>
+      <div class="content"></div>
+      <div class="actions">
+        <button class="btn tiny copy">Copiar</button>
+        <button class="btn tiny del">Excluir</button>
+      </div>
+    </div>
+  </template>
 
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
