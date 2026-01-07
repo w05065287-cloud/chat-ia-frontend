@@ -1,57 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IA Chat — Assistente</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>IA Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
 
-    <aside class="sidebar" id="sidebar">
-      <div class="brand">
-        <div class="app-title">IA Chat</div>
-        <button id="btnAdd" class="btn-add" title="Nova conversa">＋</button>
-      </div>
+<header class="topbar">
+  <button id="menuToggle">☰</button>
+  <h1>IA Chat</h1>
+  <div></div>
+</header>
 
-      <div id="conversations" class="conversations" aria-label="Conversas"></div>
+<div class="app">
 
-      <div class="sidebar-bottom">
-        <button id="themeToggle" class="btn-ghost">Tema</button>
-        <small class="muted">Histórico salvo localmente</small>
-      </div>
-    </aside>
+  <aside class="sidebar" id="sidebar">
+    <button id="newChat">+ Nova conversa</button>
+    <div id="chatList"></div>
+  </aside>
 
-    <main class="main">
-      <header class="topbar">
-        <div class="top-title">Assistente IA</div>
-        <div class="top-actions">
-          <button id="exportBtn" class="btn-ghost">Exportar</button>
-          <button id="toggleSidebar" class="btn-ghost mobile-only" title="Mostrar conversas">☰</button>
-        </div>
-      </header>
+  <main class="chat">
+    <div id="messages"></div>
 
-      <section class="chat-area">
-        <div id="chat" class="chat" role="log" aria-live="polite"></div>
+    <div class="input-area">
+      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
+      <button id="sendBtn">➤</button>
+    </div>
+  </main>
 
-        <div id="typing" class="typing hidden">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          <span class="txt">Assistente digitando…</span>
-        </div>
-      </section>
+</div>
 
-      <footer class="composer">
-        <textarea id="input" placeholder="Digite sua mensagem — Enter para enviar, Shift+Enter nova linha"></textarea>
-        <div class="composer-actions">
-          <button id="stopBtn" class="btn-stop hidden" title="Parar">⏹</button>
-          <button id="sendBtn" class="btn-send" title="Enviar">➤</button>
-        </div>
-      </footer>
-    </main>
-
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
