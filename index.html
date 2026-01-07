@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChatGPT</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Chat IA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="topbar">
-  <div class="left">☰</div>
-  <div class="center">ChatGPT</div>
-  <div class="right">Fazer upgrade</div>
-</header>
+<div class="bg"></div>
 
-<main id="chat"></main>
+<div class="app">
 
-<footer class="input-area">
-  <button class="plus">＋</button>
-  <input id="input" placeholder="Pergunte qualquer coisa" />
-  <button class="send" onclick="send()">➤</button>
-</footer>
+  <aside class="sidebar">
+    <div class="logo">🤖 Chat IA</div>
+
+    <button class="new-chat" onclick="newChat()">＋ Nova conversa</button>
+
+    <div id="history" class="history"></div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌗 Tema</button>
+  </aside>
+
+  <section class="main">
+
+    <header class="top">Assistente IA</header>
+
+    <div id="chat" class="chat"></div>
+
+    <div id="typing" class="typing hidden">IA está digitando…</div>
+
+    <div class="composer">
+      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
+      <button id="sendBtn">➤</button>
+    </div>
+
+  </section>
+
+</div>
 
 <script src="script.js"></script>
 </body>
