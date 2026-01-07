@@ -1,75 +1,124 @@
-:root{
-  --bg-1:#061027;
-  --bg-2:#07122b;
-  --panel: rgba(255,255,255,0.03);
-  --glass: rgba(255,255,255,0.02);
-  --muted:#9aa4b2;
-  --accent:#5b8cff;
-  --accent-2:#22d3ee;
-  --radius:12px;
-  --text:#e6eef6;
-  --shadow: 0 12px 40px rgba(2,6,23,0.6);
-  --maxw:980px;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:linear-gradient(160deg,var(--bg-1),var(--bg-2));color:var(--text);-webkit-font-smoothing:antialiased;}
+body {
+  background: #0b1220;
+  color: #e5e7eb;
+  height: 100vh;
+}
 
-.app{display:flex;height:100vh;max-width:1400px;margin:0 auto;}
+.app {
+  display: flex;
+  height: 100vh;
+}
 
 /* SIDEBAR */
-.sidebar{width:300px;padding:18px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-right:1px solid rgba(255,255,255,0.03)}
-.brand{font-weight:700;font-size:18px;display:flex;gap:8px;align-items:center}
-.btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
-.btn.primary{background:linear-gradient(90deg,var(--accent),#3b6df6);color:#fff;box-shadow:0 10px 30px rgba(59,109,246,0.12)}
-.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-.sidebar-list{flex:1;overflow:auto;display:flex;flex-direction:column;gap:8px;padding-top:6px}
-.conv-item{padding:12px;border-radius:10px;background:transparent;border:1px solid transparent;cursor:pointer;transition:all .14s ease;color:var(--text)}
-.conv-item:hover{transform:translateX(4px);background:rgba(255,255,255,0.01)}
-.conv-item.active{background:linear-gradient(90deg,#0f2a56,#08152b);box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.03)}
-.sidebar-footer{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-.muted{color:var(--muted);font-size:12px}
-
-/* MAIN */
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-.topbar{height:64px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.02);background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent)}
-.title{font-weight:700;font-size:20px}
-.top-actions{display:flex;gap:8px}
-
-/* CHAT AREA */
-.chat-area{flex:1;position:relative;display:flex;flex-direction:column;align-items:center}
-.chat{width:100%;max-width:var(--maxw);flex:1;overflow:auto;padding:28px 24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-.message{width:100%;max-width:760px;padding:14px;border-radius:12px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);box-shadow:0 8px 30px rgba(2,6,23,0.5);transition:transform .12s ease}
-.message.user{align-self:flex-end;background:linear-gradient(90deg,#4f85ff,#2563eb);color:#fff}
-.meta{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;color:var(--muted)}
-.content{white-space:pre-wrap;line-height:1.55;font-size:15.2px;color:var(--text)}
-.actions{display:flex;gap:8px;margin-top:10px}
-
-/* TYPING INDICATOR */
-.typing{position:sticky;bottom:160px;left:calc(50% - 480px);display:flex;gap:10px;align-items:center;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
-.typing .dots{display:flex;gap:8px}
-.typing span{width:8px;height:8px;border-radius:50%;background:#9aa6b2;animation:blink 1.4s infinite}
-@keyframes blink{0%{opacity:.25}20%{opacity:1}100%{opacity:.25}}
-
-/* COMPOSER */
-.composer{width:100%;max-width:var(--maxw);display:flex;gap:12px;padding:18px;position:sticky;bottom:0;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-top:1px solid rgba(255,255,255,0.02)}
-textarea{flex:1;min-height:56px;max-height:200px;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:rgba(0,0,0,0.35);color:var(--text);resize:none;outline:none;font-size:15px}
-textarea::placeholder{color:#b6c0cc}
-.composer-actions{display:flex;flex-direction:column;gap:8px}
-.btn.send{width:56px;height:56px;border-radius:12px;background:linear-gradient(90deg,#3b82f6,#2563eb);color:#fff;font-size:20px}
-.btn.stop{background:#ff6b6b;color:#fff}
-
-/* MOBILE */
-.mobile-only{display:none}
-@media(max-width:900px){
-  .sidebar{display:none}
-  .chat{padding:18px}
-  .typing{left:14px}
-  .composer{padding:12px}
-  .title{font-size:18px}
+.sidebar {
+  width: 260px;
+  background: #020617;
+  padding: 15px;
+  overflow-y: auto;
 }
 
-/* helper */
-.hidden{display:none}
-.small{font-size:12px;color:var(--muted)}
+.sidebar h2 {
+  margin-bottom: 15px;
+}
+
+.new-chat {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+#chatList li {
+  list-style: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  background: #111827;
+}
+
+#chatList li.active {
+  background: #1e40af;
+}
+
+/* CHAT */
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid #1f2933;
+}
+
+.messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 80%;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  line-height: 1.4;
+}
+
+.user {
+  background: #2563eb;
+  align-self: flex-end;
+}
+
+.ai {
+  background: #111827;
+  align-self: flex-start;
+}
+
+.typing {
+  display: none;
+  padding-left: 15px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* INPUT */
+.input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #1f2933;
+}
+
+textarea {
+  flex: 1;
+  resize: none;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #020617;
+  color: white;
+}
+
+button {
+  margin-left: 10px;
+  width: 50px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
