@@ -10,16 +10,11 @@
 <body>
   <div class="app">
 
-    <!-- SIDEBAR (desktop) -->
+    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="brand">🤖 <span>IA Chat</span></div>
-
-      <div class="sidebar-controls">
-        <button id="btnNewChat" class="btn primary">+ Nova conversa</button>
-      </div>
-
+      <button id="btnNewChat" class="btn primary">+ Nova conversa</button>
       <div id="sidebarList" class="sidebar-list" aria-label="Conversas"></div>
-
       <div class="sidebar-footer">
         <button id="themeToggle" class="btn ghost">Tema</button>
         <small class="muted">Histórico salvo localmente</small>
@@ -29,11 +24,8 @@
     <!-- MAIN -->
     <main class="main">
       <header class="topbar">
-        <div class="left">
-          <button id="openModal" class="btn icon mobile-only">＋</button>
-          <h1 class="title">Assistente IA</h1>
-        </div>
-        <div class="right">
+        <div class="title">Assistente IA</div>
+        <div class="top-actions">
           <button id="exportBtn" class="btn ghost">Exportar</button>
         </div>
       </header>
@@ -48,7 +40,7 @@
       </section>
 
       <footer class="composer">
-        <textarea id="input" placeholder="Digite sua mensagem — Enter para enviar, Shift+Enter nova linha"></textarea>
+        <textarea id="input" placeholder="Digite sua mensagem — Enter enviar, Shift+Enter nova linha"></textarea>
         <div class="composer-actions">
           <button id="stopBtn" class="btn stop hidden" title="Parar">⏹</button>
           <button id="sendBtn" class="btn send" title="Enviar">➤</button>
@@ -57,30 +49,8 @@
     </main>
   </div>
 
-  <!-- Modal de conversas (abre com +) -->
-  <div id="chatModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-panel">
-      <div class="modal-header">
-        <h2 id="modalTitle">Conversas</h2>
-        <button id="closeModal" class="btn icon">✕</button>
-      </div>
+  <!-- small modal for delete / rename (native confirm used for simplicity) -->
 
-      <div class="modal-body">
-        <div class="modal-actions">
-          <button id="modalNew" class="btn primary">+ Nova conversa</button>
-          <button id="modalRefresh" class="btn ghost">Atualizar</button>
-        </div>
-
-        <div id="modalList" class="modal-list"></div>
-      </div>
-
-      <div class="modal-footer">
-        <small class="muted">Clique em uma conversa para abrir</small>
-      </div>
-    </div>
-  </div>
-
-  <!-- mensagem template -->
   <template id="msgTpl">
     <div class="message">
       <div class="meta">
