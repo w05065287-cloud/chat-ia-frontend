@@ -1,37 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>IA Chat</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site com IA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="topbar">
-  <button id="menuToggle">☰</button>
-  <h1>IA Chat</h1>
-  <div></div>
-</header>
+  <h1>IA Simples</h1>
 
-<div class="app">
+  <input id="pergunta" type="text" placeholder="Digite sua pergunta">
+  <button id="btn">Perguntar</button>
 
-  <aside class="sidebar" id="sidebar">
-    <button id="newChat">+ Nova conversa</button>
-    <div id="chatList"></div>
-  </aside>
+  <p id="resposta"></p>
 
-  <main class="chat">
-    <div id="messages"></div>
-
-    <div class="input-area">
-      <textarea id="input" placeholder="Digite sua mensagem..."></textarea>
-      <button id="sendBtn">➤</button>
-    </div>
-  </main>
-
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
