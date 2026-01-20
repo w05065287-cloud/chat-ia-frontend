@@ -1,49 +1,42 @@
-const BACKEND_URL = "https://chat-ia-backend-sow2.onrender.com/chat";
+import express from "express";
+import cors from "cors";
+import fetch from "node-fetch";
+import dotenv from "dotenv";
 
-const input = document.getElementById("input");
-const messages = document.getElementById("messages");
-const sendBtn = document.getElementById("sendBtn");
-const sidebar = document.getElementById("sidebar");
-const menuToggle = document.getElementById("menuToggle");
+dotenv.config();
 
-menuToggle.onclick = () => {
-  sidebar.classList.toggle("open");
-};
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-function addMessage(text, cls) {
-  const div = document.createElement("div");
-  div.className = `msg ${cls}`;
-  div.innerText = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-async function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
-
-  addMessage(text, "user");
-  input.value = "";
+app.post("/perguntar", async (req, res) => {
+  const pergunta = req.body.pergunta;
 
   try {
-    const res = await fetch(BACKEND_URL, {
+    const respostaIA = await fetch("https://chat-ia-backend-1-hk9h.onrender.com/ia", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text })
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.API_KEY}`
+      },
+      body: JSON.stringify({
+        pergunta: pergunta
+      })
     });
 
-    const data = await res.json();
-    addMessage(data.reply || "Erro ao responder.", "bot");
-  } catch {
-    addMessage("Erro de conexão.", "bot");
-  }
-}
+    const dados = await respostaIA.json();
 
-sendBtn.onclick = sendMessage;
+    res.json({
+      resposta: dados.resposta || "Sem resposta da IA"
+    });
 
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
+  } catch (erro) {
+    res.status(500).json({
+      resposta: "Erro ao conectar com a IA"
+    });
   }
+});
+
+app.listen(3000, () => {
+  console.log("Servidor rodando na porta 3000");
 });
